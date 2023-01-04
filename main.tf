@@ -11,8 +11,8 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-resource "aws_iam_role" "iam_for_lambda" {
-  name = "lambda_function_role"
+resource "aws_iam_role" "winston_logs_test_role" {
+  name = "winston-logs-test-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -32,11 +32,11 @@ resource "aws_iam_role" "iam_for_lambda" {
   ]
 }
 
-resource "aws_lambda_function" "lambda_function" {
-  filename      = "lambda_function_payload.zip"
-  function_name = "handler"
+resource "aws_lambda_function" "winston_logs_test" {
+  filename      = "build/winston_logs_test.zip"
+  function_name = "winston-logs-test"
 
-  role = aws_iam_role.iam_for_lambda.arn
+  role = aws_iam_role.winston_logs_test_role.arn
 
   handler          = "index.handler"
   source_code_hash = data.archive_file.lambda_function_payload.output_base64sha256
@@ -50,5 +50,5 @@ resource "aws_lambda_function" "lambda_function" {
 data "archive_file" "lambda_function_payload" {
   type        = "zip"
   source_dir  = "./build"
-  output_path = "lambda_function_payload.zip"
+  output_path = "build/winston_logs_test.zip"
 }
