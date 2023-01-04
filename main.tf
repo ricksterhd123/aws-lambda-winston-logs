@@ -16,7 +16,7 @@ resource "aws_lambda_function" "lambda_function" {
   function_name = "handler"
 
   managed_policy_arns = [
-    
+    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   ]
 
   handler       = "index.handler"
