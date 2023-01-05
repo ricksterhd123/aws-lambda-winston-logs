@@ -2,10 +2,11 @@ const fetch = require('node-fetch');
 const logger = require('./logger');
 
 
-class APIError {
+class APIError extends Error {
     constructor(message) {
-        this.type = 'APIError';
-        this.message = message;
+        super();
+        this.name = "APIError";
+        this.message = JSON.stringify(message);
     }
 }
 
