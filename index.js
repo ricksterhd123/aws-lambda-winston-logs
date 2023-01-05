@@ -1,14 +1,6 @@
 const fetch = require('node-fetch');
 const logger = require('./logger');
-
-
-class APIError extends Error {
-    constructor(message) {
-        super();
-        this.name = "APIError";
-        this.message = message;
-    }
-}
+const { APIError } = require('./errors');
 
 async function handler(event, context) {
     logger.debug({event, context});
@@ -33,8 +25,18 @@ async function handler(event, context) {
         }
     } catch (error) {
         logger.error(error);
-        logger.error(new Error("Hello world"));
     }
+
+    logger.error(new Error("Hello world"));
+    logger.error(new Error());
+    logger.error(new ReferenceError());
+    logger.error(new SyntaxError());
+    logger.error(new RangeError());
+    logger.error(new TypeError());
+}
+
+if (!process.env.LAMBDA_TASK_ROOT) {
+    handler();
 }
 
 module.exports = {
