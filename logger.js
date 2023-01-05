@@ -10,9 +10,9 @@ if (!!process.env.LAMBDA_TASK_ROOT) {
 
 const logger = winston.createLogger({
     levels: winston.config.syslog.levels,
-    format: combine(
-        errors({ stack: true }),
-        json()
+    format: winston.format.combine(
+        winston.format.errors({ stack: true }),
+        winston.format.json()
     ),
     transports: [
         new winston.transports.Console({
