@@ -6,7 +6,7 @@ class APIError extends Error {
     constructor(message) {
         super();
         this.name = "APIError";
-        this.message = JSON.stringify(message);
+        this.message = message;
     }
 }
 
