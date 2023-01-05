@@ -1,5 +1,3 @@
-Error.__proto__.errorType = "Error";
-
 class APIError extends Error {
     constructor(response) {
         super();
