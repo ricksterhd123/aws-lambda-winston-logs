@@ -1,6 +1,14 @@
 const fetch = require('node-fetch');
 const logger = require('./logger');
 
+
+class APIError {
+    constructor(message) {
+        this.type = 'APIError';
+        this.message = message;
+    }
+}
+
 async function handler(event, context) {
     logger.debug({event, context});
     logger.info("Hello world");
@@ -20,10 +28,11 @@ async function handler(event, context) {
             const status = response.status;
             const headers = Array.from(response.headers);
             const body = await response.text();
-            throw {method, url, status, headers, body};
+            throw new APIError({method, url, status, headers, body});
         }
     } catch (error) {
         logger.error(error);
+        logger.error(new Error("Hello world"));
     }
 }
 
