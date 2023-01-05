@@ -3,8 +3,10 @@ const winston = require('winston');
 // HACKY FIX:
 // AWS Lambda doesn't show request ID in cloudwatch
 // https://github.com/winstonjs/winston/issues/1636
-delete console._stderr;
-delete console._stdout;
+if (!!process.env.LAMBDA_TASK_ROOT) {
+    delete console._stderr;
+    delete console._stdout;
+}
 
 const logger = winston.createLogger({
     levels: winston.config.syslog.levels,
